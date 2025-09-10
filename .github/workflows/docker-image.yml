@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push Image for MinIO Setup
+        uses: Agile-Software-Engineering-25/build-and-publish-image@v1
+        with:
+          context: "."
+          file: "Dockerfile.minio-setup.prod"
+          push: ${{ github.event_name != 'pull_request' }}
