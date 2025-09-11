@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script passes all currently defined environment variables to docker-compose up or restart
+# This script passes all currently defined environment variables to docker compose up or restart
 
 set -e
 
@@ -8,20 +8,20 @@ set -e
 ACTION="${1:-up}"
 SERVICE="${2:-}"
 
-# Export all current environment variables to a .env file for docker-compose
+# Export all current environment variables to a .env file for docker compose
 printenv > .env
 
 if [ "$ACTION" = "up" ]; then
   if [ -n "$SERVICE" ]; then
-    docker-compose up -d "$SERVICE"
+    docker compose up -d "$SERVICE"
   else
-    docker-compose up -d
+    docker compose up -d
   fi
 elif [ "$ACTION" = "restart" ]; then
   if [ -n "$SERVICE" ]; then
-    docker-compose restart "$SERVICE"
+    docker compose restart "$SERVICE"
   else
-    docker-compose restart
+    docker compose restart
   fi
 else
   echo "Usage: $0 [up|restart] [service]"
