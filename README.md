@@ -36,29 +36,40 @@ Each service has its own IAM policy with appropriate permissions:
 
 ## Using in Your Applications
 
-### Environment Variables
 
-Set these in your microservice environment:
+### User and Policy Setup
 
-```env
-# Example Service
-MINIO_ENDPOINT=http://localhost:9000
-MINIO_ACCESS_KEY=example-service-user
-MINIO_SECRET_KEY=example-service-password
-MINIO_BUCKET=example-service-bucket
+All users are now set up via JSON files in the `/users` directory. Each JSON file should contain:
+
+```json
+{
+	"username": "service-user",
+	"policy": "service-policy"
+}
 ```
 
-## Customization
+User credentials (username and password) should be managed securely and referenced in your application as needed. Policies are assigned based on the `policy` field in the user JSON file.
+
+Example user file: `/users/file-service-user.json`
+
+```json
+{
+	"username": "file-service-user",
+	"policy": "file-service-policy"
+}
+```
+
+To add or modify users, simply add or edit JSON files in `/users` and restart the setup container.
 
 ### Adding New Services
 
-1. Edit `scripts/setup-minio.sh` to add new users, buckets, and policies
-2. Add corresponding policy files in the `policies/` directory
+1. Add a new user JSON file in the `/users` directory
+2. Add a corresponding policy file in the `/policies` directory
 3. Restart the setup: `docker-compose down && docker-compose up -d`
 
 ### Modifying Policies
 
-1. Edit the policy files in `policies/` directory
+1. Edit the policy files in `/policies` directory
 2. Restart the setup container: `docker-compose restart minio-setup`
 
 ## Troubleshooting
@@ -69,7 +80,6 @@ MINIO_BUCKET=example-service-bucket
 
 ## Security Notes
 
-- Change default passwords in production
 - Use HTTPS in production environments
 - Consider using external secret management
 - Regularly audit user permissions
