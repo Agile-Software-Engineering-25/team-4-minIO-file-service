@@ -6,8 +6,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: adminpassword
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     volumes:
       - minio_data:/data
       - ./scripts:/scripts
@@ -26,6 +26,7 @@ services:
       - minio
     volumes:
       - ./scripts:/scripts
+      - ./policies:/policies
     entrypoint: >
       /bin/sh -c "
       sleep 10;

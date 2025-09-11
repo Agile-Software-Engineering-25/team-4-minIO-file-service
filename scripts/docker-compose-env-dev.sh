@@ -1,6 +1,19 @@
 #!/bin/bash
 # This script passes all currently defined environment variables to docker compose up or restart
 
+# Source .env file if present, then delete it
+if [ -f "/.env" ]; then
+  echo "Sourcing environment variables from /.env"
+  set -a
+  if ! source /.env; then
+    echo "Failed to source /.env file. Exiting."
+    rm -f /.env
+    exit 1
+  fi
+  set +a
+  rm -f /.env
+fi
+
 set -e
 
 # Usage: ./scripts/docker-compose-env.sh [up|restart] [service]
