@@ -49,10 +49,6 @@ for policy_path in /policies/*.json; do
   create_policy "$policy_name"
 done
 
-# Create users from environment variables
-# Define users as USER1_NAME, USER1_PASSWORD, USER1_POLICY, USER2_NAME, ...
-echo "Creating users from environment variables..."
-user_index=1
 
 # Create users from JSON files in /users folder
 echo "Creating users from /users JSON files..."
@@ -89,22 +85,6 @@ create_user_from_json() {
     echo "No policy specified for user $user_env_name, skipping policy assignment."
   fi
 }
-
-user_index=1
-
-while true; do
-  user_name_var="USER${user_index}_NAME"
-  user_password_var="USER${user_index}_PASSWORD"
-  user_policy_var="USER${user_index}_POLICY"
-  user_name="${!user_name_var}"
-  user_password="${!user_password_var}"
-  user_policy="${!user_policy_var}"
-  if [ -z "$user_name" ] || [ -z "$user_password" ] || [ -z "$user_policy" ]; then
-    break
-  fi
-  create_user "$user_name" "$user_password" "$user_policy"
-  user_index=$((user_index + 1))
-done
 
 echo "Setup complete!"
 echo "==========================="
