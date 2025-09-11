@@ -51,7 +51,7 @@ Example user file: `/users/file-service-user.json`
 
 To add or modify users, simply add or edit JSON files in `/users` and restart the setup container.
 
-For username "file-service-user", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
+For username "file-service", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
 
 Update the `env`File when creating new Users. There all the ENVIROMENT Variables that need to be set are defined.
 

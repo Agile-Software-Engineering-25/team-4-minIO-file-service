@@ -74,7 +74,7 @@ done
 # Function to create a user from JSON file and env variables
 # Takes a JSON file with "username" and "policy" fields
 # Maps the username as an env variable to get the actual username and password
-# E.g. for username "file-service-user", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
+# E.g. for username "file-service", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
 # Creates the user and attaches the policy
 create_user_from_json() {
   local json_file="$1"
