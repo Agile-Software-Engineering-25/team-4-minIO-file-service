@@ -14,25 +14,15 @@ docker-compose up -d
 docker-compose logs minio-setup
 ```
 
-## Architecture
-
 ### Users Created
+TODO
+
 ### Buckets Created
-- `user-service-bucket` - User profile data, avatars
-- `auth-service-bucket` - Authentication tokens, certificates
-- `file-service-bucket` - General file uploads
-- `notification-service-bucket` - Email templates, notification assets
-- `shared-bucket` - Shared resources between services
+TODO
 
 ### Policies
 
-Each service has its own IAM policy with appropriate permissions:
-
-- **User Service**: Full access to `user-service-bucket` only
-- **Auth Service**: Full access to `auth-service-bucket`, read access to `shared-bucket`
-- **File Service**: Full access to `file-service-bucket` and `shared-bucket`
-- **Notification Service**: Full access to `notification-service-bucket`, read access to all other buckets
-- **Read only**: Read access to all buckets for monitoring
+TODO
 
 ## Using in Your Applications
 
@@ -60,6 +50,10 @@ Example user file: `/users/file-service-user.json`
 ```
 
 To add or modify users, simply add or edit JSON files in `/users` and restart the setup container.
+
+For username "file-service-user", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
+
+Update the `env`File when creating new Users. There all the ENVIROMENT Variables that need to be set are defined.
 
 ### Adding New Services
 

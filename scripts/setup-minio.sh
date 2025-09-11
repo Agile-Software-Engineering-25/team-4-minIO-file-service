@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# Source .env file if present, then delete it
+if [ -f "/.env" ]; then
+  echo "Sourcing environment variables from /.env"
+  set -a
+  if ! source /.env; then
+    echo "Failed to source /.env file. Exiting."
+    rm -f /.env
+    exit 1
+  fi
+  set +a
+  rm -f /.env
+fi
+
 
 # Wait for MinIO to be ready
 echo "Waiting for MinIO to be ready..."
