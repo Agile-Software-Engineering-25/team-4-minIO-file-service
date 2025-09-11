@@ -53,6 +53,40 @@ done
 # Define users as USER1_NAME, USER1_PASSWORD, USER1_POLICY, USER2_NAME, ...
 echo "Creating users from environment variables..."
 user_index=1
+
+# Create users from JSON files in /users folder
+echo "Creating users from /users JSON files..."
+for user_json in /users/*.json; do
+  if [ -f "$user_json" ]; then
+    create_user_from_json "$user_json"
+  fi
+done
+
+# Function to create a user from JSON file and env variables
+# Takes a JSON file with "username" and "policy" fields
+# Maps the username as an env variable to get the actual username and password
+# E.g. for username "file-service-user", it looks for env vars MINIO_FILE_SERVICE_USER and MINIO_FILE_SERVICE_PASSWORD
+# Creates the user and attaches the policy
+create_user_from_json() {
+  local json_file="$1"
+  local user_name=$(jq -r '.username' "$json_file")
+  local policy_name=$(jq -r '.policy' "$json_file")
+  # Map username to env variable for password, e.g. MINIO_FILE_SERVICE_USER -> MINIO_FILE_SERVICE_PASSWORD
+  local env_user_var="MINIO_$(echo "$user_name" | tr 'a-z-' 'A-Z_')_USER"
+  local env_password_var="MINIO_$(echo "$user_name" | tr 'a-z-' 'A-Z_')_PASSWORD"
+  local user_env_name="${!env_user_var}"
+  local user_password="${!env_password_var}"
+  if [ -z "$user_env_name" ] || [ -z "$user_password" ]; then
+    echo "Environment variables for $user_name not set, skipping user creation."
+    return
+  fi
+  echo "Creating user: $user_env_name with policy: $policy_name"
+  mc admin user add minio "$user_env_name" "$user_password" 2>/dev/null || echo "User $user_env_name already exists"
+  mc admin policy set minio "$policy_name" user="$user_env_name"
+}
+
+user_index=1
+
 while true; do
   user_name_var="USER${user_index}_NAME"
   user_password_var="USER${user_index}_PASSWORD"
