@@ -80,9 +80,14 @@ create_user_from_json() {
     echo "Environment variables for $user_name not set, skipping user creation."
     return
   fi
-  echo "Creating user: $user_env_name with policy: $policy_name"
+  echo "Creating user: $user_env_name"
   mc admin user add minio "$user_env_name" "$user_password" 2>/dev/null || echo "User $user_env_name already exists"
-  mc admin policy set minio "$policy_name" user="$user_env_name"
+  if [ -n "$policy_name" ] && [ "$policy_name" != "null" ]; then
+    echo "Assigning policy $policy_name to user $user_env_name"
+    mc admin policy set minio "$policy_name" user="$user_env_name"
+  else
+    echo "No policy specified for user $user_env_name, skipping policy assignment."
+  fi
 }
 
 user_index=1
