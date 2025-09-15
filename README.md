@@ -66,6 +66,13 @@ Update the `env`File when creating new Users. There all the ENVIROMENT Variables
 1. Edit the policy files in `/policies` directory
 2. Restart the setup container: `docker-compose restart minio-setup`
 
+## Local Instance:
+
+1. Build image for setup:
+``docker build -f Dockerfile.minio-setup -t minio/setup .``
+2. Create an `.env file` in the project root with all the enviroment values set.
+3. Run `/scripts/docker-compose-env-dev.sh`
+
 ## Troubleshooting
 
 - **Setup fails**: Check logs with `docker-compose logs minio-setup`

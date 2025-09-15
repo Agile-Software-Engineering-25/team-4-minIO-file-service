@@ -20,13 +20,14 @@ services:
       retries: 3
 
   minio-setup:
-    image: minio/mc:latest
+    image: minio/setup:latest
     container_name: minio-setup
     depends_on:
       - minio
     volumes:
       - ./scripts:/scripts
       - ./policies:/policies
+      - ./users:/users
     entrypoint: >
       /bin/sh -c "
       sleep 10;
