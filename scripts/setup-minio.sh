@@ -40,7 +40,7 @@ create_policy() {
   local policy_file="/policies/${policy_name}.json"
   if [ -f "$policy_file" ]; then
     echo "Creating policy: $policy_name from $policy_file"
-    mc admin policy add minio "$policy_name" "$policy_file" 2>/dev/null || echo "Policy $policy_name already exists"
+    mc admin policy create minio "$policy_name" "$policy_file"
   else
     echo "Policy file $policy_file not found, skipping."
   fi
@@ -66,19 +66,18 @@ create_user_from_json() {
   # Map username to env variable for password, e.g. MINIO_FILE_SERVICE_USER -> MINIO_FILE_SERVICE_PASSWORD
   local env_user_var="MINIO_$(echo "$user_name" | tr 'a-z-' 'A-Z_')_USER"
   local env_password_var="MINIO_$(echo "$user_name" | tr 'a-z-' 'A-Z_')_PASSWORD"
-  local user_env_name="${!env_user_var}"
   local user_password="${!env_password_var}"
-  if [ -z "$user_env_name" ] || [ -z "$user_password" ]; then
+  if [ -z "$user_password" ]; then
     echo "Environment variables for $user_name not set, skipping user creation."
     return
   fi
   echo "Creating user: $user_env_name"
-  mc admin user add minio "$user_env_name" "$user_password" 2>/dev/null || echo "User $user_env_name already exists"
+  mc admin user add minio "$user_name" "$user_password"
   if [ -n "$policy_name" ] && [ "$policy_name" != "null" ]; then
-    echo "Assigning policy $policy_name to user $user_env_name"
-    mc admin policy set minio "$policy_name" user="$user_env_name"
+    echo "Assigning policy $policy_name to user $user_name"
+    mc admin policy attach minio "$policy_name" --user "$user_name"
   else
-    echo "No policy specified for user $user_env_name, skipping policy assignment."
+    echo "No policy specified for user $user__name, skipping policy assignment."
   fi
 }
 
