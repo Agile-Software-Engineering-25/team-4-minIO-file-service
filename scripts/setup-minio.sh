@@ -1,18 +1,20 @@
 #!/bin/bash
 
 # Source .env file if present, then delete it
-if [ -f "/.env" ]; then
+env_file="scripts/.env"
+if [ -f "$env_file" ]; then
   echo "Sourcing environment variables from /.env"
   set -a
-  if ! source /.env; then
-    echo "Failed to source /.env file. Exiting."
-    rm -f /.env
+  if ! source "$env_file"; then
+    echo "Failed to source scripts/.env file. Exiting."
+    rm -f $env_file
     exit 1
   fi
   set +a
-  rm -f /.env
+  rm -f "$env_file"
+else
+  echo "WARNING: /.env file not found. Proceeding with existing environment variables."
 fi
-
 
 # Wait for MinIO to be ready
 echo "Waiting for MinIO to be ready..."
@@ -44,31 +46,12 @@ create_policy() {
   fi
 }
 
-# Function to create a user and attach a policy
-create_user() {
-  local user_name="$1"
-  local user_password="$2"
-  local policy_name="$3"
-  echo "Creating user: $user_name with policy: $policy_name"
-  mc admin user add minio "$user_name" "$user_password" 2>/dev/null || echo "User $user_name already exists"
-  mc admin policy set minio "$policy_name" user="$user_name"
-}
-
 # Create all policies from the policies folder (ignoring .ignore files)
 echo "Creating policies from /policies..."
 for policy_path in /policies/*.json; do
   policy_file=$(basename "$policy_path")
   policy_name="${policy_file%.json}"
   create_policy "$policy_name"
-done
-
-
-# Create users from JSON files in /users folder
-echo "Creating users from /users JSON files..."
-for user_json in /users/*.json; do
-  if [ -f "$user_json" ]; then
-    create_user_from_json "$user_json"
-  fi
 done
 
 # Function to create a user from JSON file and env variables
@@ -99,9 +82,16 @@ create_user_from_json() {
   fi
 }
 
+# Create users from JSON files in /users folder
+echo "Creating users from /users JSON files..."
+for user_json in /users/*.json; do
+  if [ -f "$user_json" ]; then
+    create_user_from_json "$user_json"
+  fi
+done
+
 echo "Setup complete!"
 echo "==========================="
 echo "MinIO Console: http://localhost:9001"
 echo "MinIO API: http://localhost:9000"
-echo "Admin credentials: ${MINIO_ROOT_USER:-admin} / ${MINIO_ROOT_PASSWORD:-adminpassword}"
 echo "==========================="
