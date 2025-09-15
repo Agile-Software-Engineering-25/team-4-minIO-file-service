@@ -1,15 +1,15 @@
 #!/bin/bash
 # This script passes all currently defined environment variables to docker compose up or restart
 
-set -e
-
 # Usage: ./scripts/docker-compose-env.sh [up|restart] [service]
+
+set -e
 
 ACTION="${1:-up}"
 SERVICE="${2:-}"
 
-# Export all current environment variables to a .env file for docker compose
-printenv > .env
+# Export all environment variables for MINIO to a .env file for docker-compose
+printenv | grep "MINIO_"> scripts/.env
 
 if [ "$ACTION" = "up" ]; then
   if [ -n "$SERVICE" ]; then
