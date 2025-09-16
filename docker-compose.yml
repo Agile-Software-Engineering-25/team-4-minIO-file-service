@@ -20,7 +20,7 @@ services:
       retries: 3
 
   minio-setup:
-    image: ghcr.io/agile-software-engineering-25/team-4-backend-abstract-file-service:latest
+    image: ghcr.io/agile-software-engineering-25/team-4-minio-file-service:latest
     container_name: minio-setup
     depends_on:
       - minio
