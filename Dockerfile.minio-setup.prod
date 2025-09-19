@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+RUN apk add --no-cache jq curl bash
+
+# Download mc (MinIO Client)
+RUN curl -L https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc \
+    && chmod +x /usr/local/bin/mc
+
+RUN apk del --no-cache curl
+
+RUN mkdir -p /policies /users /scripts
+
+COPY scripts/ /scripts/
+COPY policies/ /policies/
+COPY users/ /users/
+
+ENTRYPOINT ["/bin/sh", "-c", "/scripts/setup-minio.sh"]
