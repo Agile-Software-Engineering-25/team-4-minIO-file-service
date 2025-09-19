@@ -26,15 +26,15 @@ printenv | grep "MINIO_"> scripts/.env
 
 if [ "$ACTION" = "up" ]; then
   if [ -n "$SERVICE" ]; then
-    docker compose up -d "$SERVICE"
+    docker compose -f docker-compose.dev.yml up -d "$SERVICE"
   else
-    docker compose up -d
+    docker compose -f docker-compose.dev.yml up -d
   fi
 elif [ "$ACTION" = "restart" ]; then
   if [ -n "$SERVICE" ]; then
-    docker compose restart "$SERVICE"
+    docker -f docker-compose.dev.yml compose restart "$SERVICE"
   else
-    docker compose restart
+    docker -f docker-compose.dev.yml compose restart
   fi
 else
   echo "Usage: $0 [up|restart] [service]"
