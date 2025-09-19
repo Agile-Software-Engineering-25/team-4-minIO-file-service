@@ -27,11 +27,11 @@ echo "MinIO is ready! Setting up users, policies, and buckets..."
 
 # Create buckets for different microservices (with idempotency)
 echo "Creating buckets..."
-mc mb minio/auth-service-bucket --ignore-existing
-mc mb minio/user-service-bucket --ignore-existing
+# mc mb minio/auth-service-bucket --ignore-existing
+# mc mb minio/user-service-bucket --ignore-existing
 mc mb minio/file-service-bucket --ignore-existing
-mc mb minio/notification-service-bucket --ignore-existing
-mc mb minio/shared-bucket --ignore-existing
+# mc mb minio/notification-service-bucket --ignore-existing
+# mc mb minio/shared-bucket --ignore-existing
 
 
 # Function to create a policy from a file in the policies folder
