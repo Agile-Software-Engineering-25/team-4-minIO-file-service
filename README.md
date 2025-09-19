@@ -26,6 +26,7 @@ TODO
 
 ## Using in Your Applications
 
+### Buckets are created in the setup-minio.sh
 
 ### User and Policy Setup
 
