@@ -18,7 +18,7 @@ fi
 
 # Wait for MinIO to be ready
 echo "Waiting for MinIO to be ready..."
-until mc alias set minio http://minio:9000 "${MINIO_ROOT_USER:-admin}" "${MINIO_ROOT_PASSWORD:-adminpassword}"; do
+until mc alias set minio "${MINIO_URL:-http://minio:9000}" "${MINIO_ROOT_USER:-admin}" "${MINIO_ROOT_PASSWORD:-adminpassword}"; do
   echo "MinIO not ready yet, waiting..."
   sleep 5
 done
