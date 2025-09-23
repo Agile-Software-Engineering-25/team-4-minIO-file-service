@@ -10,8 +10,10 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::user-service-bucket",
-        "arn:aws:s3:::user-service-bucket/*"
+        "arn:aws:s3:::ase-team-7",
+        "arn:aws:s3:::ase-team-7/*",
+        "arn:aws:s3:::shared-bucket",
+        "arn:aws:s3:::shared-bucket/*"
       ]
     }
   ]
