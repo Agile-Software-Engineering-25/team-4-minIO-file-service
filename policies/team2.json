@@ -10,17 +10,8 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::auth-service-bucket",
-        "arn:aws:s3:::auth-service-bucket/*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:ListBucket"
-      ],
-      "Resource": [
+        "arn:aws:s3:::ase-team-2",
+        "arn:aws:s3:::ase-team-2/*",
         "arn:aws:s3:::shared-bucket",
         "arn:aws:s3:::shared-bucket/*"
       ]
