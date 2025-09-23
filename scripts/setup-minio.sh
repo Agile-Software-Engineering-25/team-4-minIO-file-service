@@ -27,21 +27,21 @@ echo "MinIO is ready! Setting up users, policies, and buckets..."
 
 # Create buckets for different microservices (with idempotency)
 echo "Creating buckets..."
-mc mb minio/team1 --ignore-existing
-mc mb minio/team2 --ignore-existing
-mc mb minio/team3 --ignore-existing
-# mc mb minio/team4 --ignore-existing
-mc mb minio/team5 --ignore-existing
-mc mb minio/team6 --ignore-existing
-mc mb minio/team7 --ignore-existing
-mc mb minio/team8 --ignore-existing
-mc mb minio/team9 --ignore-existing
-mc mb minio/team10 --ignore-existing
-mc mb minio/team11 --ignore-existing
-mc mb minio/team12 --ignore-existing
-mc mb minio/team13 --ignore-existing
-mc mb minio/team14 --ignore-existing
-mc mb minio/team15 --ignore-existing
+mc mb minio/ase-team-1 --ignore-existing
+mc mb minio/ase-team-2 --ignore-existing
+mc mb minio/ase-team-3 --ignore-existing
+mc mb minio/ase-team-4 --ignore-existing
+mc mb minio/ase-team-5 --ignore-existing
+mc mb minio/ase-team-6 --ignore-existing
+mc mb minio/ase-team-7 --ignore-existing
+mc mb minio/ase-team-8 --ignore-existing
+mc mb minio/ase-team-9 --ignore-existing
+mc mb minio/ase-team-10 --ignore-existing
+mc mb minio/ase-team-11 --ignore-existing
+mc mb minio/ase-team-12 --ignore-existing
+mc mb minio/ase-team-13 --ignore-existing
+mc mb minio/ase-team-14 --ignore-existing
+mc mb minio/ase-team-15 --ignore-existing
 mc mb minio/shared-bucket --ignore-existing
 
 
